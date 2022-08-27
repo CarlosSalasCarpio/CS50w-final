@@ -1,0 +1,56 @@
+{% extends "pdf_manager/layout.html" %}
+
+{% block title %}
+    Certificates
+{% endblock %}
+
+{% block main %}
+
+{% if monthsage %}
+    <div class="alert alert-danger">
+        <strong>{{ monthsage }}</strong>
+    </div>
+    <br>
+{% endif %}
+
+
+
+<form method="post" action="{% url 'download_certificado_user' %}">
+    {% csrf_token %}
+    <div class="row gx-5">
+        <div class="col">
+            <div style="text-align: left" class="p-3 border bg-light">
+                <p >Welcome: <br> <strong>Email:</strong> {{ email }} <br> <strong>ID:</strong> {{ username }} <p> 
+                <h3>Job certificate</h3> <br>
+                <button class="btn btn-primary" type="submit" name="submit_button" value="certificate" target="newtab">Download job certificate</button> <br><br>
+                <h3>Payment certificates</h3>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div style="overflow-x:auto;"></div>
+    <table style="color: #F8F9FA;" class="table">
+        <thead>
+            <th>Payment certificate</th>
+            <th>Download</th>
+        </thead>
+            {% for desprendible in desprendibles %}
+                <tr>
+                    <td>{{ desprendible.fortnight }} fortnight {{ desprendible.month }} {{ desprendible.year }}</td>
+                    <td>
+                        <form method="post" action="{% url 'download_desprendible' %}">
+                            {% csrf_token %}
+                            <input style="display: none;" class="form-control" name="pdf_download" type="text" value="{{ desprendible.pdf }}">
+                            <button type="submit" class="btn btn-primary btn-sm">Download</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}    
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+    
+{% endblock %}

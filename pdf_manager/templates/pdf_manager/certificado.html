@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AN AMAZING COMPANY CERTIFICATE</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                padding: 20px 20px 50px 20px;
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                
+            }
+            .details {
+                padding: 0px 40px 0px 40px;
+                text-align: justify !important;
+                font-family: Arial, Helvetica, sans-serif;
+                /*margin-left: 40%;*/
+            }
+
+        </style>
+    </head>
+    <body>
+    {% load static %}
+        <img width="110" src="{{ logo }}"> <br><br>
+        <div style="text-align: center;" class='header'>
+            <h1>  
+                {{ company_db }} <br>
+
+                <span style="font-style: italic;">CERTIFICATE</span>
+            </h1>
+        </div>
+        <div>
+        <div class='details'>
+            <p>
+                Lorem ipsum dolor sit amet {{ company_db }}. Sed dignissim lorem sed dui imperdiet {{ name }}, Etiam lacus eros 
+                {{ document_type }}: {{ id }} faucibus quam dolor eget diam {{ hire_date }} nibh erat facilisis risus 
+                {{ possition }} tempus erat nec malesuada {{ contract_type }} Vestibulum ante ipsum primis $ {{ salary }}. <br><br><br>
+
+                Vivamus at felis tempor, dapibus ligula sed {{ today }}. 
+            </p>
+
+            <p style="padding: 100px 20px 100px 20px;">
+                <img width="120" src="{{ firma }}"> <br>
+                Elon Musk | Technoking | Another Crazy Elon's Company <br>
+                Boca Chica Blvd, Brownsville<br>
+                PBX: (+999) 999 99 99 / 999 99 99 Ext. 999 <br>
+                Cel.: (+99) 999 9999999 <br>
+                <a href="">http://www.anamazingorg.com</a> <br>
+                <img width="60" src="{{ logo }}"> <br>
+                <span style="font-style: italic;">¡Praesent eget diam vitae!</span>
+            </p>
+
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends "pdf_manager/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+    Admin page
+{% endblock %}
+
+{% block main %}
+
+{% block script %}
+    <script src="{% static 'pdf_manager/admin.js' %}"></script>
+{% endblock %}
+
+{% if message %}
+    <div class="alert alert-danger">
+        <strong>{{ message }}</strong>
+    </div>
+    <br>
+{% endif %}
+
+{% if message_success %}
+    <div class="alert alert-success">
+        <strong>{{ message_success }}</strong>
+    </div>
+    <br>
+{% endif %}
+
+
+<!-- Admin dashboard -->
+
+
+<div class="row gx-5">
+    <div class="col">
+        <div class="p-3 border bg-light">
+
+            <!-- Admin dashboard -->
+            <div id="admin_main_view">
+                <h2>Admin dashboard</h2> <br>
+
+                <button id="button_admin_csv" style="margin: 50px;" class="button_admin_csv"></button>
+                <p>Employees</p>
+
+                <button id="button_admin_pdf" style="margin: 50px;" class="button_admin_pdf"></button>
+                <p>Certificates</p>
+            </div>
+
+            
+            <!-- Go-back button -->
+            <button id="back_to_admin_main" class="button_back"></button>
+
+
+            <!-- Admin upload employees information (CSV) -->
+            <form method="post" enctype="multipart/form-data" id="admin_csv_view">
+            {% csrf_token %}
+
+                
+
+                <h3>Update employees' information (CSV)</h3> <br>
+                
+                <div style="width: 25%; margin: 0 auto;">
+                {{ upload_csv_form | crispy }}
+                </div>
+
+                <button class="btn btn-primary" type="submit" name='submit_button' value="csv">Update</button>
+            </form>
+
+
+            <!-- Admin upload employees' certificates (PDF) -->
+            <form method="post" enctype="multipart/form-data" id="admin_pdf_view">
+            {% csrf_token %}
+
+                <h3>Update payment certificates (PDF)</h3> <br>
+                
+                {{ upload_pdf_form | crispy }}
+
+                <button class="btn btn-primary" type="submit" name='submit_button' value="pdf">Upload</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Admin upload employees' certificates (PDF) -->
+<div style="overflow-x:auto;" id="admin_pdf_table">
+    <table style="color: #F8F9FA;" class="table">
+        <thead>
+            <th>Fortnight</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Download</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            {% for desprendible in desprendibles %}
+                <tr>
+                    <td>{{ desprendible.fortnight }}</td>
+                    <td>{{ desprendible.month }}</td>
+                    <td>{{ desprendible.year }}</td>
+                    <td>
+                        <form method="post" action="{% url 'download_desprendible' %}">
+                            {% csrf_token %}
+                            <input style="display: none;" class="form-control" name="pdf_download" type="text" value="{{ desprendible.pdf }}">
+                            <button type="submit" class="btn btn-primary btn-sm">Download</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'delete_desprendible' desprendible.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form> 
+                    </td>
+                </tr>
+            {% endfor %}    
+        </tbody>
+    </table>
+</div>
+{% endblock %}
